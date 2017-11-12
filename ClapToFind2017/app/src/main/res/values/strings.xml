@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">ClapToFind2017</string>
+    <string name="actionBar_name">Home</string>
+    <string name="menu_setting_name">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_fragment">Home Fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="setting_fragment">Setting fragment</string>
+</resources>

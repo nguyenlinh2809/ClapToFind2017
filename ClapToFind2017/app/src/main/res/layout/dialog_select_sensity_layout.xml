@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="100dp"
+    android:orientation="vertical"
+    android:gravity="center">
+    <TextView
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/color_text_menu"
+        android:text="40%"
+        android:id="@+id/tvSensityProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <SeekBar
+        android:id="@+id/sbSensity"
+        android:min="1"
+        android:max="100"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_marginTop="@dimen/padding_dialog"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:text="Ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_sensity_ok"/>
+        <Button
+            android:text="Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_sensity_cancel"/>
+    </LinearLayout>
+</LinearLayout>

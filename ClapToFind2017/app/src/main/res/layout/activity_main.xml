@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerLayout"
+    tools:context="com.example.acer.claptofind2017.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarMain"
+            app:title="@string/actionBar_name"
+            android:background="@color/color_text_menu"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+        </android.support.v7.widget.Toolbar>
+        <FrameLayout
+            android:id="@+id/contentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+    </LinearLayout>
+    <android.support.design.widget.NavigationView
+        app:itemTextColor="@color/color_text_menu"
+        app:headerLayout="@layout/layout_header_navigation"
+        app:menu="@menu/navigation_menu"
+        android:layout_gravity="start"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/navigationMenu">
+
+    </android.support.design.widget.NavigationView>
+    
+
+</android.support.v4.widget.DrawerLayout>
