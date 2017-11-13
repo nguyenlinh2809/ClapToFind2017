@@ -29,6 +29,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addEvents() {
+
+
+    }
+
+    private void addActionBar() {
+        setSupportActionBar(toolbarMain);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarMain.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
+        toolbarMain.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.START);
+            }
+        });
+
         navigationMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -46,19 +61,6 @@ public class MainActivity extends AppCompatActivity {
                     default: break;
                 }
                 return false;
-            }
-        });
-
-    }
-
-    private void addActionBar() {
-        setSupportActionBar(toolbarMain);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarMain.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
-        toolbarMain.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.START);
             }
         });
     }

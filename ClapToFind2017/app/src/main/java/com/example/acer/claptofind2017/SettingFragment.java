@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class SettingFragment extends Fragment {
 
     TextView tvPickRingtone, tvRingtoneResult;
     TextView tvPickSensity, tvResultSensity;
+    CheckBox cbRingtone, cbFlash, cbVibrate;
     public SettingFragment() {
         // Required empty public constructor
     }
@@ -39,8 +41,28 @@ public class SettingFragment extends Fragment {
         tvRingtoneResult = view.findViewById(R.id.tvResultRingtone);
         tvPickSensity = view.findViewById(R.id.tvPickSensity);
         tvResultSensity = view.findViewById(R.id.tvResultSensity);
+        cbRingtone = view.findViewById(R.id.cbSound);
+        cbFlash = view.findViewById(R.id.cbFlash);
+        cbVibrate = view.findViewById(R.id.cbVibrate);
+        getShareReferenceSettings();
         addEvents();
         return view;
+    }
+
+    private void getShareReferenceSettings() {
+        ShareReferencesManager shareReferencesManager = new ShareReferencesManager(getActivity());
+        cbRingtone.setChecked(shareReferencesManager.getRingtoneStatus());
+        cbFlash.setChecked(shareReferencesManager.getFlashStatus());
+        cbVibrate.setChecked(shareReferencesManager.getVibrateStatus());
+        tvRingtoneResult.setText(shareReferencesManager.getRingtoneName());
+        tvResultSensity.setText(shareReferencesManager.getSensityStatus());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ShareReferencesManager shareReferencesManager = new ShareReferencesManager(getActivity());
+        shareReferencesManager.saveSettings(cbRingtone.isChecked(), cbFlash.isChecked(), cbVibrate.isChecked(), tvRingtoneResult.getText().toString(), tvResultSensity.getText().toString());
     }
 
     private void addEvents() {
