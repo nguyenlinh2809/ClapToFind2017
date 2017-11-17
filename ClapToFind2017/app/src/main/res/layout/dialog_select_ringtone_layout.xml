@@ -4,16 +4,34 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/margin_right_text">
-
+    <TextView
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:padding="@dimen/textview_padding"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select your ringtone"/>
+    <TextView
+        android:background="@color/color_text_menu"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
     <ListView
+        android:layout_marginTop="@dimen/padding_dialog"
         android:id="@+id/lvRingtone"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/listview_height"
+        android:layout_height="wrap_content"
         android:choiceMode="singleChoice">
 
     </ListView>
+    <TextView
+        android:background="@color/color_text_menu"
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
 
     <LinearLayout
+        android:layout_marginTop="@dimen/margin_right_text"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,6 +42,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btn_dialog_ok"/>
         <Button
+            android:layout_marginLeft="@dimen/margin_right_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_dialog_cancel"

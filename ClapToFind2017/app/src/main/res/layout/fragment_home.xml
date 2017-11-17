@@ -15,4 +15,15 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:id="@+id/tvNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:padding="@dimen/textview_padding"
+        android:textColor="@color/color_text_menu"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
+
 </RelativeLayout>

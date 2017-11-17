@@ -1,6 +1,14 @@
 package com.example.acer.claptofind2017;
 
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +19,12 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    public static int PERMISSION_CODE = 7890;
     DrawerLayout drawerLayout;
     Toolbar toolbarMain;
     NavigationView navigationMenu;
@@ -58,11 +69,22 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         item.setChecked(true);
                         break;
+                    case R.id.menu_contact:
+                        displayContact();
+                        drawerLayout.closeDrawers();
+                        item.setChecked(true);
+                        break;
                     default: break;
                 }
                 return false;
             }
         });
+    }
+
+    private void displayContact(){
+        getSupportActionBar().setTitle("Contact");
+        ContactFragment contactFragment = new ContactFragment();
+        fragmentManager.beginTransaction().replace(R.id.contentFrame, contactFragment).commit();
     }
 
     private void addControls() {
@@ -87,4 +109,5 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager.beginTransaction().replace(R.id.contentFrame, homeFragment, getClass().getName()).commit();
 
     }
+
 }

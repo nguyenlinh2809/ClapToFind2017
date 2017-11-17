@@ -21,19 +21,8 @@
         android:id="@+id/gr3"
         android:checkableBehavior="single">
         <item
-            android:title="@string/remove_ads"
-            android:icon="@drawable/ic_icon_hand"/>
-    </group>
-    <group
-        android:id="@+id/gr4"
-        android:checkableBehavior="single">
-        <item android:title="@string/language"
-            android:icon="@drawable/ic_icon_language"/>
-    </group>
-    <group
-        android:id="@+id/gr5"
-        android:checkableBehavior="single">
-        <item android:title="@string/contact_us"
+            android:id="@+id/menu_contact"
+            android:title="@string/contact_us"
             android:icon="@drawable/ic_icon_phone"/>
     </group>
 

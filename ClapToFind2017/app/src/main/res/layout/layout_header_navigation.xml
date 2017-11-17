@@ -12,7 +12,6 @@
         android:src="@drawable/ic_image2"
         android:scaleType="fitXY" />
     <TextView
-
         android:layout_marginRight="@dimen/margin_right_text"
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -23,6 +22,6 @@
         android:gravity="end"
         android:text="Clap to find"
         android:textColor="#f5f1f1"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:textStyle="bold" />
 </RelativeLayout>
