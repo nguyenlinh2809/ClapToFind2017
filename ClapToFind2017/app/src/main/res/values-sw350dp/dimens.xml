@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="header_height">194dp</dimen>
+    <dimen name="text_size">19sp</dimen>
+    <dimen name="textview_width">213dp</dimen>
+    <dimen name="image_button_width">155dp</dimen>
+    <dimen name="image_button_height">184dp</dimen>
+    <dimen name="image_button_marginTop">58dp</dimen>
+    <dimen name="listview_height">486dp</dimen>
+    <dimen name="padding_dialog">9dp</dimen>
+    <dimen name="height_sensity_dialog">97dp</dimen>
+    <dimen name="width_sensity_dialog">291dp</dimen>
+    <dimen name="textview_padding">4dp</dimen>
+    <dimen name="margin_layout">38dp</dimen>
+</resources>
