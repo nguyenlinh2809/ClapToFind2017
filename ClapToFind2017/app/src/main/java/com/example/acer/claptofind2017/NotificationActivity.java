@@ -20,7 +20,7 @@ public class NotificationActivity extends AppCompatActivity {
     TurnOnFlash turnOnFlash;
 
     boolean receiver = false;
-    boolean checkFlash = true;
+    boolean checkFlash = false;
 
     ArrayList<Integer> listSong;
     ShareReferencesManager shareReferencesManager;
@@ -52,7 +52,10 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 receiver = true;
-                checkFlash = false;
+                checkFlash = true;
+                /*if(shareReferencesManager.getRingtoneStatus()){
+                    turnOnFlash.blinkFlash(checkFlash);
+                }*/
                 stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
                 Intent intent = new Intent();
                 intent.setAction(MY_ACTION);
@@ -72,11 +75,15 @@ public class NotificationActivity extends AppCompatActivity {
         listSong.add(R.raw.ringtone);
         listSong.add(R.raw.sumon);
         listSong.add(R.raw.voice_bawa);
+        listSong.add(R.raw.in_the_end);
+        listSong.add(R.raw.numb);
+        listSong.add(R.raw.until_you);
+
 
         btnYes = (Button) findViewById(R.id.btnYes);
 
         if(shareReferencesManager.getFlashStatus()){
-            turnOnFlash = new TurnOnFlash();
+            turnOnFlash = new TurnOnFlash(getApplicationContext());
         }
 
 
@@ -92,7 +99,8 @@ public class NotificationActivity extends AppCompatActivity {
             playRingtone.playSong();
         }
         if (isFlash) {
-            turnOnFlash.turnOn();
+            turnOnFlash.blinkFlash(checkFlash);
+
         }
         if (isVibration) {
             vibration.vibrate();
@@ -107,8 +115,8 @@ public class NotificationActivity extends AppCompatActivity {
         if (isVibration) {
             vibration.stopVibrate();
         }
-        if (isFlash && (!checkFlash)) {
-            turnOnFlash.turnOff();
+        if (isFlash) {
+            turnOnFlash.blinkFlash(true);
         }
     }
 }

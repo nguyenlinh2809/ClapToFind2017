@@ -1,6 +1,12 @@
 package com.example.acer.claptofind2017;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.os.SystemClock;
+import android.util.Log;
+import android.widget.Toast;
 
 
 public class TurnOnFlash {
@@ -8,37 +14,58 @@ public class TurnOnFlash {
     Camera.Parameters mParams;
     int delay = 100;
     boolean on = false;
+    Context context;
 
-    public TurnOnFlash(){
-        mCamera = Camera.open();
-        mParams = mCamera.getParameters();
+    public TurnOnFlash(Context context){
+        this.context = context;
+
+        boolean hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+        if(hasFlash){
+            if (mCamera != null) {
+                mCamera.release();
+                mCamera = null;
+            }
+            //add try catch
+            try{
+                mCamera = Camera.open();
+                mParams = mCamera.getParameters();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }else {
+            Toast.makeText(context, "This device does not support Flash Light!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
     }
-    public void blinkFlash(boolean isStart){
-        for(int i=0; i< 5; i++){
-            if(isStart==false){
+    public void blinkFlash(boolean end){
+        for(int i=0; i<3; i++){
+            toggleFlashLight();
+            if(end){
                 turnOff();
                 break;
             }
-            toggleFlashLight();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
         }
-        turnOff();
     }
 
 
     public void turnOn() {
         if (mCamera != null) {
-
             //mParams = mCamera.getParameters();
             mParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             mCamera.setParameters(mParams);
             mCamera.startPreview();
             on = true;
-        }
+        }else return;
+
     }
 
     public void turnOff() {
@@ -49,9 +76,10 @@ public class TurnOnFlash {
                 mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
                 mCamera.setParameters(mParams);
                 mCamera.stopPreview();
+                on = false;
             }
-        }
-        on = false;
+        }else return;
+
     }
 
     public void toggleFlashLight() {
@@ -61,4 +89,5 @@ public class TurnOnFlash {
             turnOff();
         }
     }
+
 }

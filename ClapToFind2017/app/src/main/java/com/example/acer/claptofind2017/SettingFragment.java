@@ -67,7 +67,9 @@ public class SettingFragment extends Fragment {
         listSong.add("ringtone");
         listSong.add("sumon");
         listSong.add("voice_bawa");
-
+        listSong.add("in_the_end");
+        listSong.add("numb");
+        listSong.add("ultil_you");
         getShareReferenceSettings();
         addEvents();
         return view;
@@ -219,6 +221,7 @@ public class SettingFragment extends Fragment {
         }
         return true;
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

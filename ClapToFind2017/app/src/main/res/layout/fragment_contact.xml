@@ -20,7 +20,7 @@
         android:layout_below="@+id/tvContact"
         android:background="@color/color_text_menu"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/textview_padding" />
+        android:layout_height="1dp" />
     <TextView
         android:id="@+id/tvName"
         android:layout_above="@+id/tvEmail"
@@ -53,8 +53,9 @@
         android:layout_above="@+id/tvTeam"
         android:background="@color/color_text_menu"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/textview_padding" />
+        android:layout_height="1dp" />
     <TextView
+        android:textStyle="bold"
         android:id="@+id/tvTeam"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/margin_layout"

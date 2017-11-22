@@ -4,48 +4,54 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/margin_right_text">
+
     <TextView
-        android:textSize="@dimen/text_size"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold"
-        android:padding="@dimen/textview_padding"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select your ringtone"/>
+        android:gravity="center"
+        android:padding="@dimen/textview_padding"
+        android:text="Select your ringtone"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/text_size"
+        android:textStyle="bold" />
+
     <TextView
-        android:background="@color/color_text_menu"
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="2dp"
+        android:background="@color/color_text_menu" />
+
     <ListView
-        android:layout_marginTop="@dimen/padding_dialog"
         android:id="@+id/lvRingtone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/width_sensity_dialog"
+        android:layout_marginTop="@dimen/padding_dialog"
         android:choiceMode="singleChoice">
 
     </ListView>
+
     <TextView
-        android:background="@color/color_text_menu"
         android:layout_width="match_parent"
-        android:layout_height="2dp" />
+        android:layout_height="2dp"
+        android:background="@color/color_text_menu" />
 
     <LinearLayout
-        android:layout_marginTop="@dimen/margin_right_text"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_right_text"
+        android:gravity="center"
         android:orientation="horizontal">
+
         <Button
-            android:text="OK"
+            android:id="@+id/btn_dialog_ok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_dialog_ok"/>
+            android:text="OK" />
+
         <Button
-            android:layout_marginLeft="@dimen/margin_right_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/btn_dialog_cancel"
-            android:text="Cancel"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_right_text"
+            android:text="Cancel" />
     </LinearLayout>
 </LinearLayout>

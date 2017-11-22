@@ -10,6 +10,6 @@
     <dimen name="padding_dialog">6dp</dimen>
     <dimen name="height_sensity_dialog">61dp</dimen>
     <dimen name="width_sensity_dialog">183dp</dimen>
-    <dimen name="textview_padding">3dp</dimen>
+    <dimen name="textview_padding">1dp</dimen>
     <dimen name="margin_layout">24dp</dimen>
 </resources>

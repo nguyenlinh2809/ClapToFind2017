@@ -10,13 +10,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import be.tarsos.dsp.AudioDispatcher;
 import be.tarsos.dsp.io.android.AudioDispatcherFactory;
@@ -40,6 +42,9 @@ public class ClapService extends Service {
     ShareReferencesManager shareReferencesManager;
     double m_sensitivity = 0;
 
+    Timer timer;
+    CustomTimerTask customTimerTask;
+    public static boolean clapDetect = false;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -55,7 +60,7 @@ public class ClapService extends Service {
             m_sensitivity = m_sensitivity + 5;
         }
         m_sensitivity = m_sensitivity/2;
-        Log.d("sensitivity", m_sensitivity+"");
+
         audio = startListen(m_sensitivity);
 
         initReceiver();
@@ -74,6 +79,7 @@ public class ClapService extends Service {
 
         mThread = new Thread(audio);
         mThread.start();
+        Log.d("count", "");
         showNotification();
         return START_STICKY;
     }
@@ -90,17 +96,38 @@ public class ClapService extends Service {
     public AudioDispatcher startListen(double sensitivity) {
         AudioDispatcher mDispatcher = AudioDispatcherFactory.fromDefaultMicrophone(22050, 1024, 0);
         double threshold = 8;
+
         PercussionOnsetDetector mPercussionDetector = new PercussionOnsetDetector(22050, 1024,
                 new OnsetHandler() {
 
                     @Override
                     public void handleOnset(double time, double salience) {
-                        stopListen();
-                        Log.d("Clap", "Clap detected!");
-                        m_sensitivity = Double.parseDouble(shareReferencesManager.getSensityStatus());
-                        m_sensitivity = m_sensitivity/2;
-                        Intent intent = new Intent(ClapService.this, NotificationActivity.class);
-                        startActivity(intent);
+
+                        if(!clapDetect){
+                            if(timer != null){
+                                timer.cancel();
+                            }
+                            timer = new Timer();
+                            customTimerTask = new CustomTimerTask();
+                            timer.schedule(customTimerTask, 1000, 1000);
+                            clapDetect = true;
+                        }else if(clapDetect){
+                            if(timer != null){
+                                timer.cancel();
+                                timer.purge();
+                                timer = null;
+                            }
+                            if(CustomTimerTask.count <= 2){
+                                Log.d("Clap", "Clap detected!");
+                                stopListen();
+                                m_sensitivity = Double.parseDouble(shareReferencesManager.getSensityStatus());
+                                m_sensitivity = m_sensitivity/2;
+
+                                Intent intent = new Intent(ClapService.this, NotificationActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                getApplicationContext().startActivity(intent);
+                            }
+                        }
 
                     }
                 }, sensitivity, threshold);
@@ -108,6 +135,7 @@ public class ClapService extends Service {
         this.detector = mPercussionDetector;
         return mDispatcher;
     }
+
 
     public void stopListen() {
         if (audio != null) {
@@ -131,9 +159,12 @@ public class ClapService extends Service {
             if (intent.getAction().equals(NotificationActivity.MY_ACTION)) {
                 boolean receive = intent.getBooleanExtra(NotificationActivity.MY_RECEIVER, false);
                 if (receive) {
+                    clapDetect = false;
+                    CustomTimerTask.count = 0;
                     audio = startListen(m_sensitivity);
                     mThread = new Thread(audio);
                     mThread.start();
+
                 }
             }
         }
@@ -154,4 +185,18 @@ public class ClapService extends Service {
 
     }
 
+}
+class CustomTimerTask extends TimerTask{
+    public static int count =0;
+    @Override
+    public void run() {
+        count ++;
+        Log.d("count", count+"");
+        if(count > 2){
+            this.cancel();
+            count = 0;
+            ClapService.clapDetect = false;
+        }
+
+    }
 }

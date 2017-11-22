@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     private void displayContact(){
         getSupportActionBar().setTitle("Contact");
         ContactFragment contactFragment = new ContactFragment();
-        fragmentManager.beginTransaction().replace(R.id.contentFrame, contactFragment).commit();
+        fragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_show, R.anim.fragment_out).replace(R.id.contentFrame, contactFragment).commit();
     }
 
     private void addControls() {
@@ -100,13 +100,13 @@ public class MainActivity extends AppCompatActivity {
     private void displaySettingFragment() {
         SettingFragment settingFragment = new SettingFragment();
         getSupportActionBar().setTitle("Setting");
-        fragmentManager.beginTransaction().replace(R.id.contentFrame, settingFragment, getClass().getName()).commit();
+        fragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_show, R.anim.fragment_out).replace(R.id.contentFrame, settingFragment, getClass().getName()).commit();
     }
 
     private void displayHomeFragment() {
         getSupportActionBar().setTitle("Home");
         HomeFragment homeFragment = new HomeFragment();
-        fragmentManager.beginTransaction().replace(R.id.contentFrame, homeFragment, getClass().getName()).commit();
+        fragmentManager.beginTransaction().setCustomAnimations(R.anim.fragment_show, R.anim.fragment_out).replace(R.id.contentFrame, homeFragment, getClass().getName()).commit();
 
     }
 
