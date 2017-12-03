@@ -64,13 +64,13 @@ public class ShareReferencesManager {
     }
 
     public boolean getRingtoneStatus(){
-        return sharedPreferences.getBoolean(RINGTONE, false);
+        return sharedPreferences.getBoolean(RINGTONE, true);
     }
     public boolean getFlashStatus(){
         return sharedPreferences.getBoolean(FLASH, false);
     }
     public boolean getVibrateStatus(){
-        return sharedPreferences.getBoolean(VIBRATE, false);
+        return sharedPreferences.getBoolean(VIBRATE, true);
     }
     public boolean getStartStatus(){
         return sharedPreferences.getBoolean(IS_START, false);

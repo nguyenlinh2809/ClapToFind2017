@@ -192,7 +192,7 @@ public class SettingFragment extends Fragment {
         lvRingtone.setAdapter(adapterSong);
         position = listSong.indexOf(tvRingtoneResult.getText().toString());
         lvRingtone.setItemChecked(position, true);
-
+        lvRingtone.setSelection(position);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

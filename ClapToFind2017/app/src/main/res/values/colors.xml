@@ -8,4 +8,5 @@
     <color name="color_background_navigation">#e1d3d2</color>
     <color name="color_text_menu">#F26850</color>
     <color name="color_text_header">#f5f1f1</color>
+    <color name="color_toolbar">#f15a24</color>
 </resources>

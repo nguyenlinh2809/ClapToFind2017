@@ -14,7 +14,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbarMain"
             app:title="@string/actionBar_name"
-            android:background="@color/color_text_menu"
+            android:background="@color/color_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
