@@ -33,6 +33,7 @@ public class ClapService extends Service {
 
     NotificationManager notificationManager;
     public static int NOTIFICATION_ID = 1234;
+    Notification.Builder builder;
 
     AudioDispatcher audio;
     PercussionOnsetDetector detector;
@@ -89,7 +90,8 @@ public class ClapService extends Service {
         super.onDestroy();
         unregisterReceiver(receiver);
         stopListen();
-        notificationManager.cancel(NOTIFICATION_ID);
+       // notificationManager.cancel(NOTIFICATION_ID);
+        stopForeground(true);
     }
 
 
@@ -173,7 +175,7 @@ public class ClapService extends Service {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public void showNotification() {
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification.Builder builder = new Notification.Builder(getApplicationContext());
+        builder = new Notification.Builder(getApplicationContext());
         builder.setSmallIcon(R.drawable.logo);
         builder.setContentText("Clap to find your phone!");
         builder.setContentTitle("Clap to find");
@@ -181,8 +183,9 @@ public class ClapService extends Service {
         Intent intent = new Intent(ClapService.this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
-        notificationManager.notify(NOTIFICATION_ID, builder.build());
-
+        //notificationManager.notify(NOTIFICATION_ID, builder.build());
+        //start foreground
+        startForeground(NOTIFICATION_ID, builder.build());
     }
 
 }

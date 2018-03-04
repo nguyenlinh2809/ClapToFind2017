@@ -3,6 +3,7 @@
     package="com.example.acer.claptofind2017">
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application

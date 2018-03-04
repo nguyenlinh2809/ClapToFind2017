@@ -23,6 +23,7 @@ public class TurnOnFlash {
         if(hasFlash){
             if (mCamera != null) {
                 mCamera.release();
+                mCamera.stopPreview();
                 mCamera = null;
             }
             //add try catch

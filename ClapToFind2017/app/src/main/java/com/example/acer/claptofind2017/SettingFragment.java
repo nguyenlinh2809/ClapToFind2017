@@ -110,11 +110,15 @@ public class SettingFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     boolean check = checkPermission(permissionNameCamera);
-                    if(!check){
+                    if(check){
+                        shareReferencesManager.saveFlash(b);
+                    }else {
                         requestPermissions(new String[]{permissionNameCamera}, MainActivity.PERMISSION_CODE);
                     }
+                }else{
+                    shareReferencesManager.saveFlash(b);
                 }
-                shareReferencesManager.saveFlash(b);
+
             }
         });
         cbRingtone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -218,8 +222,10 @@ public class SettingFragment extends Fragment {
             if(getActivity().checkSelfPermission(permissionName) != PackageManager.PERMISSION_GRANTED){
                 return false;
             }else return true;
+        }else {
+            return true;
         }
-        return true;
+
     }
 
 

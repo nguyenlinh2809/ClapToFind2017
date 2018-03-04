@@ -22,6 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp" />
     <TextView
+        android:layout_below="@+id/tvContact"
         android:id="@+id/tvName"
         android:layout_above="@+id/tvEmail"
         android:layout_marginTop="@dimen/margin_right_text"

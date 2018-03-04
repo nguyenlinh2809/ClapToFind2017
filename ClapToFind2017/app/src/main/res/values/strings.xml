@@ -11,4 +11,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about_us">About us</string>
+    <string name="remove_ads">Remove ads</string>
+    <string name="language">Language</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="alert_mode">Alert Mode</string>
+    <string name="Sound">Sound</string>
+    <string name="Flash">Flash</string>
+    <string name="Vibration">Vibrate</string>
+    <string name="AlertSetting">Alert Settings</string>
+    <string name="RingTone">Ringtone</string>
+    <string name="Volume">Sensitivity</string>
 </resources>

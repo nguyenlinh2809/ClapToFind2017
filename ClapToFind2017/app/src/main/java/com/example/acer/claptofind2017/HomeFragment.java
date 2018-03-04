@@ -95,8 +95,10 @@ public class HomeFragment extends Fragment {
             if(getActivity().checkSelfPermission(permissionName) != PackageManager.PERMISSION_GRANTED){
                 return false;
             }else return true;
+        }else{
+            return true;
         }
-        return true;
+
     }
 
     @Override
