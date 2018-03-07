@@ -116,7 +116,7 @@ public class NotificationActivity extends AppCompatActivity {
             vibration.stopVibrate();
         }
         if (isFlash) {
-            turnOnFlash.turnOff();
+            turnOnFlash.m_turnOff();
         }
     }
 }

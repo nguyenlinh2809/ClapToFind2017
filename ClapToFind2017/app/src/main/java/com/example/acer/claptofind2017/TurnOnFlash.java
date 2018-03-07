@@ -21,11 +21,12 @@ public class TurnOnFlash {
 
         boolean hasFlash = context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
         if(hasFlash){
-            if (mCamera != null) {
+            /*if (mCamera != null) {
                 mCamera.release();
                 mCamera.stopPreview();
                 mCamera = null;
-            }
+            }*/
+
             //add try catch
             try{
                 mCamera = Camera.open();
@@ -59,19 +60,32 @@ public class TurnOnFlash {
 
 
     public void turnOn() {
-        if (mCamera != null) {
+
+        mParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        mCamera.setParameters(mParams);
+        mCamera.startPreview();
+        on = true;
+
+       /* if (mCamera == null) {
             //mParams = mCamera.getParameters();
+
             mParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
             mCamera.setParameters(mParams);
             mCamera.startPreview();
             on = true;
-        }else return;
+        }else return;*/
 
     }
 
     public void turnOff() {
 
-        if (mCamera != null) {
+        mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        mCamera.setParameters(mParams);
+        mCamera.stopPreview();
+        on = false;
+
+
+       /* if (mCamera != null) {
             //mParams = mCamera.getParameters();
             if (mParams.getFlashMode().equals(Camera.Parameters.FLASH_MODE_TORCH)) {
                 mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
@@ -79,8 +93,20 @@ public class TurnOnFlash {
                 mCamera.stopPreview();
                 on = false;
             }
-        }else return;
+        }else return;*/
 
+    }
+    public void m_turnOff() {
+
+        mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+        mCamera.setParameters(mParams);
+        mCamera.stopPreview();
+        on = false;
+
+        mCamera.stopPreview();
+        mCamera.release();
+        mParams = null;
+        mCamera = null;
     }
 
     public void toggleFlashLight() {
