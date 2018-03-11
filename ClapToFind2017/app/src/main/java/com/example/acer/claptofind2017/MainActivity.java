@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private void addActionBar() {
         setSupportActionBar(toolbarMain);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //toolbarMain.setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
+        toolbarMain.setNavigationIcon(R.drawable.ic_gear);
         toolbarMain.setTitleTextColor(getResources().getColor(R.color.color_text_header));
         toolbarMain.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
