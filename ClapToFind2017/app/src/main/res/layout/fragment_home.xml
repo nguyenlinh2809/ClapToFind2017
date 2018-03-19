@@ -5,15 +5,24 @@
     tools:context="com.example.acer.claptofind2017.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:id="@+id/mLinear"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
     <ImageButton
         android:id="@+id/btnToggle"
         android:layout_width="@dimen/image_button_width"
         android:layout_height="@dimen/image_button_height"
+        android:layout_below="@+id/mLinear"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="11dp"
         android:background="@null"
-        android:src="@drawable/button_off"
-        android:layout_marginTop="@dimen/image_button_marginTop"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/button_off" />
 
     <TextView
         android:id="@+id/tvNotification"

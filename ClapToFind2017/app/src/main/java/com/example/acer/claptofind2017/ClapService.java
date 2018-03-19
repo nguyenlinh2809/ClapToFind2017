@@ -71,6 +71,9 @@ public class ClapService extends Service {
         receiver = new ConfirmReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(NotificationActivity.MY_ACTION);
+        intentFilter.addAction(NotificationActivity.MY_ACTION_VOLUME_UP);
+        intentFilter.addAction(NotificationActivity.MY_ACTION_VOLUME_DOWN);
+        intentFilter.addAction(NotificationActivity.MY_ACTION_ON_DESTROY);
         registerReceiver(receiver, intentFilter);
     }
 
@@ -158,16 +161,21 @@ public class ClapService extends Service {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(NotificationActivity.MY_ACTION)) {
-                boolean receive = intent.getBooleanExtra(NotificationActivity.MY_RECEIVER, false);
+            if (intent.getAction().equals(NotificationActivity.MY_ACTION) || intent.getAction().equals(NotificationActivity.MY_ACTION_VOLUME_UP) || intent.getAction().equals(NotificationActivity.MY_ACTION_VOLUME_DOWN) || intent.getAction().equals(NotificationActivity.MY_ACTION_ON_DESTROY)) {
+                /*boolean receive = intent.getBooleanExtra(NotificationActivity.MY_RECEIVER, false);
                 if (receive) {
                     clapDetect = false;
                     CustomTimerTask.count = 0;
                     audio = startListen(m_sensitivity);
                     mThread = new Thread(audio);
                     mThread.start();
-
-                }
+                }*/
+                clapDetect = false;
+                CustomTimerTask.count = 0;
+                audio = startListen(m_sensitivity);
+                mThread = new Thread(audio);
+                mThread.start();
+                Log.d("receiver", "detect");
             }
         }
     }

@@ -66,16 +66,19 @@ public class MainActivity extends AppCompatActivity {
                         displayHomeFragment();
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
+                        toolbarMain.setNavigationIcon(R.drawable.ic_gear);
                         break;
                     case R.id.menu_setting:
                         displaySettingFragment();
                         drawerLayout.closeDrawers();
                         item.setChecked(true);
+                        toolbarMain.setNavigationIcon(R.drawable.ic_left_arrow);
                         break;
                     case R.id.menu_contact:
                         displayContact();
                         drawerLayout.closeDrawers();
                         item.setChecked(true);
+                        toolbarMain.setNavigationIcon(R.drawable.ic_left_arrow);
                         break;
                     default: break;
                 }

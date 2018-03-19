@@ -9,7 +9,7 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height"
-        android:src="@drawable/ic_image2"
+        android:src="@drawable/background_navigation"
         android:scaleType="fitXY" />
     <TextView
         android:layout_marginRight="@dimen/margin_right_text"

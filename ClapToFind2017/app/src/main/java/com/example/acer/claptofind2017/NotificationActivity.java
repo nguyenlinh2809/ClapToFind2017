@@ -4,6 +4,8 @@ package com.example.acer.claptofind2017;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,13 +16,20 @@ import java.util.ArrayList;
 public class NotificationActivity extends AppCompatActivity {
 
     public static String MY_ACTION = "my_action";
-    public static String MY_RECEIVER = "my_receiver";
+    //public static String MY_RECEIVER = "my_receiver";
+
+    public static String MY_ACTION_VOLUME_UP = "my_action_volume_up";
+    public static String MY_ACTION_VOLUME_DOWN = "my_action_volume_down";
+    public static String MY_ACTION_ON_DESTROY = "my_action_on_destroy";
+
     PlayRingtone playRingtone;
     Vibration vibration;
     TurnOnFlash turnOnFlash;
 
     boolean receiver = false;
     boolean checkFlash = false;
+
+    boolean checkReceiver = false;
 
     ArrayList<Integer> listSong;
     ShareReferencesManager shareReferencesManager;
@@ -51,6 +60,7 @@ public class NotificationActivity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                checkReceiver = true;
                 receiver = true;
                 checkFlash = true;
                 /*if(shareReferencesManager.getRingtoneStatus()){
@@ -59,7 +69,7 @@ public class NotificationActivity extends AppCompatActivity {
                 stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
                 Intent intent = new Intent();
                 intent.setAction(MY_ACTION);
-                intent.putExtra(MY_RECEIVER, receiver);
+                //intent.putExtra(MY_RECEIVER, receiver);
                 sendBroadcast(intent);
                 finish();
             }
@@ -118,5 +128,49 @@ public class NotificationActivity extends AppCompatActivity {
         if (isFlash) {
             turnOnFlash.m_turnOff();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        checkReceiver = true;
+        if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
+            Intent intent = new Intent();
+            intent.setAction(MY_ACTION_VOLUME_DOWN);
+            //intent.putExtra(MY_RECEIVER, receiver);
+            sendBroadcast(intent);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        checkReceiver = true;
+        if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+            stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
+            Intent intent = new Intent();
+            intent.setAction(MY_ACTION_VOLUME_UP);
+            //intent.putExtra(MY_RECEIVER, receiver);
+            sendBroadcast(intent);
+            finish();
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(!checkReceiver){
+            stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
+            Intent intent = new Intent();
+            intent.setAction(MY_ACTION_ON_DESTROY);
+            //intent.putExtra(MY_RECEIVER, receiver);
+            sendBroadcast(intent);
+            finish();
+        }
+        super.onDestroy();
     }
 }

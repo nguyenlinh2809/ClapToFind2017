@@ -21,49 +21,46 @@
         android:background="@color/color_text_menu"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
-    <TextView
-        android:layout_below="@+id/tvContact"
-        android:id="@+id/tvName"
-        android:layout_above="@+id/tvEmail"
-        android:layout_marginTop="@dimen/margin_right_text"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/text_size"
-        android:gravity="center"
-        android:text="Nguyen Ngoc Linh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/tvEmail"
-        android:layout_above="@+id/imv"
-        android:layout_marginTop="@dimen/margin_right_text"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:text="nnguyenlinh2809@gmail.com"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imv"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="64dp"
+        android:gravity="center"
+        android:text="maiquyen073@gmail.com"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp" />
+
     <ImageView
         android:id="@+id/imv"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
         android:layout_above="@+id/tvCross"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/logo"
-        android:layout_width="200dp"
-        android:layout_height="300dp" />
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/logo" />
     <TextView
         android:id="@+id/tvCross"
         android:layout_above="@+id/tvTeam"
         android:background="@color/color_text_menu"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
+
     <TextView
-        android:textStyle="bold"
         android:id="@+id/tvTeam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="@dimen/margin_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Min Du Studio"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
-        android:gravity="center"
-        android:text="ICT Team"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 </RelativeLayout>
