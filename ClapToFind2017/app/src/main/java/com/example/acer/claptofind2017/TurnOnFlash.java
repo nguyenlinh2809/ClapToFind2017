@@ -37,6 +37,9 @@ public class TurnOnFlash {
 
         }else {
             Toast.makeText(context, "This device does not support Flash Light!", Toast.LENGTH_SHORT).show();
+            ShareReferencesManager shareReferencesManager = new ShareReferencesManager(context);
+            shareReferencesManager.saveFlash(false);
+            mCamera = null;
             return;
         }
 
@@ -60,11 +63,13 @@ public class TurnOnFlash {
 
 
     public void turnOn() {
+        if(mCamera != null){
+            mParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            mCamera.setParameters(mParams);
+            mCamera.startPreview();
+            on = true;
+        }else return;
 
-        mParams.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-        mCamera.setParameters(mParams);
-        mCamera.startPreview();
-        on = true;
 
        /* if (mCamera == null) {
             //mParams = mCamera.getParameters();
@@ -78,11 +83,13 @@ public class TurnOnFlash {
     }
 
     public void turnOff() {
+        if(mCamera != null){
+            mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            mCamera.setParameters(mParams);
+            mCamera.stopPreview();
+            on = false;
+        }else return;
 
-        mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        mCamera.setParameters(mParams);
-        mCamera.stopPreview();
-        on = false;
 
 
        /* if (mCamera != null) {
@@ -97,16 +104,18 @@ public class TurnOnFlash {
 
     }
     public void m_turnOff() {
+        if(mCamera != null){
+            mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            mCamera.setParameters(mParams);
+            mCamera.stopPreview();
+            on = false;
 
-        mParams.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-        mCamera.setParameters(mParams);
-        mCamera.stopPreview();
-        on = false;
+            mCamera.stopPreview();
+            mCamera.release();
+            mParams = null;
+            mCamera = null;
+        }else return;
 
-        mCamera.stopPreview();
-        mCamera.release();
-        mParams = null;
-        mCamera = null;
     }
 
     public void toggleFlashLight() {
