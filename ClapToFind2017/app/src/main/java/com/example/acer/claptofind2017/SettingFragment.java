@@ -108,17 +108,24 @@ public class SettingFragment extends Fragment {
         cbFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    boolean check = checkPermission(permissionNameCamera);
-                    if(check){
-                        shareReferencesManager.saveFlash(b);
-                    }else {
-                        requestPermissions(new String[]{permissionNameCamera}, MainActivity.PERMISSION_CODE);
-                    }
-                }else{
-                    shareReferencesManager.saveFlash(b);
-                }
 
+                boolean hasFlash = getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+                if(!hasFlash){
+                    Toast.makeText(getActivity(), "This device is not support Flash!", Toast.LENGTH_LONG).show();
+                    cbFlash.setEnabled(false);
+                    shareReferencesManager.saveFlash(false);
+                }else {
+                    if(b){
+                        boolean check = checkPermission(permissionNameCamera);
+                        if(check){
+                            shareReferencesManager.saveFlash(b);
+                        }else {
+                            requestPermissions(new String[]{permissionNameCamera}, MainActivity.PERMISSION_CODE);
+                        }
+                    }else{
+                        shareReferencesManager.saveFlash(b);
+                    }
+                }
             }
         });
         cbRingtone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -239,6 +246,7 @@ public class SettingFragment extends Fragment {
                 tvNotificationFlash.setBackgroundColor(getResources().getColor(android.R.color.background_light));
             }else{
                 cbFlash.setChecked(false);
+                Toast.makeText(getActivity(), "Please grant Camera permission to use Flash function", Toast.LENGTH_LONG).show();
                 tvNotificationFlash.setText("Please grant Camera permission to use Flash function");
                 tvNotificationFlash.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
             }

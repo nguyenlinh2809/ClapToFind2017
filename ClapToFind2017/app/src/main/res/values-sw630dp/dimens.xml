@@ -12,4 +12,5 @@
     <dimen name="width_sensity_dialog">525dp</dimen>
     <dimen name="textview_padding">8dp</dimen>
     <dimen name="margin_layout">70dp</dimen>
+    <dimen name="tv_margin_top">15dp</dimen>
 </resources>

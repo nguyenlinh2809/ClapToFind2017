@@ -36,7 +36,6 @@ public class TurnOnFlash {
             }
 
         }else {
-            Toast.makeText(context, "This device does not support Flash Light!", Toast.LENGTH_SHORT).show();
             ShareReferencesManager shareReferencesManager = new ShareReferencesManager(context);
             shareReferencesManager.saveFlash(false);
             mCamera = null;
