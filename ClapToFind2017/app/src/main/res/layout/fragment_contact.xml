@@ -29,19 +29,18 @@
         android:layout_above="@+id/imv"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="64dp"
         android:gravity="center"
         android:text="maiquyen073@gmail.com"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp" />
 
     <ImageView
+
         android:id="@+id/imv"
         android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:layout_above="@+id/tvCross"
+        android:layout_height="200dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
+        android:layout_centerVertical="true"
         android:src="@drawable/logo" />
     <TextView
         android:id="@+id/tvCross"
