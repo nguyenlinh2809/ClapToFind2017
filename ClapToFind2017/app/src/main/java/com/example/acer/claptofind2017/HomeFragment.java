@@ -5,9 +5,13 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +31,8 @@ public class HomeFragment extends Fragment {
     ImageButton imbtnToggle;
     TextView tvNotification;
     ShareReferencesManager shareReferencesManager;
+
+    Snackbar snackbar;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -115,12 +121,44 @@ public class HomeFragment extends Fragment {
                 tvNotification.setText("Service is started!");
                 tvNotification.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
             }else{
-                Toast.makeText(getActivity(), "Permission not granted!", Toast.LENGTH_SHORT).show();
                 imbtnToggle.setImageResource(R.drawable.button_off);
                 isStart = false;
-                tvNotification.setText("Please grant Microphone permission to use this app");
-                tvNotification.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+
+                if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permissionNameMicrophone)){
+                    Toast.makeText(getActivity(), "Permission not granted!", Toast.LENGTH_SHORT).show();
+                    tvNotification.setText("Please grant Microphone permission to use this app");
+                    tvNotification.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                }else{
+                    tvNotification.setText("");
+                    tvNotification.setBackgroundColor(getResources().getColor(android.R.color.white));
+                    Toast.makeText(getActivity(), "Permission denied, please enanle to use application!", Toast.LENGTH_LONG).show();
+                    snackbar = Snackbar.make(getView(), getResources().getString(R.string.Snacbar), Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setAction(getResources().getString(R.string.Snacbar_message), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (getActivity() == null){
+                                return;
+                            }
+                            Intent intent = new Intent();
+                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                            intent.setData(uri);
+                            getActivity().startActivity(intent);
+
+                        }
+                    });
+                    snackbar.show();
+                }
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(snackbar != null){
+            snackbar.dismiss();
+        }
+
     }
 }

@@ -7,6 +7,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_alignParentTop="true"
         android:id="@+id/tvContact"
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
@@ -17,25 +18,26 @@
         android:layout_height="wrap_content"
         android:text="Contact Us" />
     <TextView
+        android:id="@+id/tvHorizontal1"
         android:layout_below="@+id/tvContact"
         android:background="@color/color_text_menu"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
     <TextView
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/tvHorizontal1"
         android:id="@+id/tvEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imv"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:gravity="center"
         android:text="maiquyen073@gmail.com"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp" />
 
     <ImageView
-
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/tvEmail"
         android:id="@+id/imv"
         android:layout_width="200dp"
         android:layout_height="200dp"
@@ -43,20 +45,19 @@
         android:layout_centerVertical="true"
         android:src="@drawable/logo" />
     <TextView
+        android:layout_marginTop="100dp"
+        android:layout_below="@+id/imv"
         android:id="@+id/tvCross"
-        android:layout_above="@+id/tvTeam"
         android:background="@color/color_text_menu"
         android:layout_width="match_parent"
         android:layout_height="1dp" />
 
     <TextView
+        android:layout_below="@+id/tvCross"
         android:id="@+id/tvTeam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="Min Du Studio"
         android:textColor="@color/colorPrimaryDark"

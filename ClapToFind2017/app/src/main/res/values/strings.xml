@@ -22,4 +22,6 @@
     <string name="AlertSetting">Alert Settings</string>
     <string name="RingTone">Ringtone</string>
     <string name="Volume">Sensitivity</string>
+    <string name="Snacbar">Go to AppInfo/Permission to enable permission</string>
+    <string name="Snacbar_message">Go</string>
 </resources>

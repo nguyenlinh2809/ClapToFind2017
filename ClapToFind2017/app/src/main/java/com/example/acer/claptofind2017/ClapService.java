@@ -83,7 +83,6 @@ public class ClapService extends Service {
 
         mThread = new Thread(audio);
         mThread.start();
-        Log.d("count", "");
         showNotification();
         return START_STICKY;
     }
@@ -93,7 +92,6 @@ public class ClapService extends Service {
         super.onDestroy();
         unregisterReceiver(receiver);
         stopListen();
-       // notificationManager.cancel(NOTIFICATION_ID);
         stopForeground(true);
     }
 
@@ -123,7 +121,6 @@ public class ClapService extends Service {
                                 timer = null;
                             }
                             if(CustomTimerTask.count <= 2){
-                                Log.d("Clap", "Clap detected!");
                                 stopListen();
                                 m_sensitivity = Double.parseDouble(shareReferencesManager.getSensityStatus());
                                 m_sensitivity = m_sensitivity/2;
@@ -149,7 +146,6 @@ public class ClapService extends Service {
                 mThread.interrupt();
             }
             audio.stop();
-            Log.d("Stop", "Stop");
         } else {
             Toast.makeText(this, "Already stop", Toast.LENGTH_SHORT).show();
             return;
@@ -162,20 +158,12 @@ public class ClapService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(NotificationActivity.MY_ACTION) || intent.getAction().equals(NotificationActivity.MY_ACTION_VOLUME_UP) || intent.getAction().equals(NotificationActivity.MY_ACTION_VOLUME_DOWN) || intent.getAction().equals(NotificationActivity.MY_ACTION_ON_DESTROY)) {
-                /*boolean receive = intent.getBooleanExtra(NotificationActivity.MY_RECEIVER, false);
-                if (receive) {
-                    clapDetect = false;
-                    CustomTimerTask.count = 0;
-                    audio = startListen(m_sensitivity);
-                    mThread = new Thread(audio);
-                    mThread.start();
-                }*/
+
                 clapDetect = false;
                 CustomTimerTask.count = 0;
                 audio = startListen(m_sensitivity);
                 mThread = new Thread(audio);
                 mThread.start();
-                Log.d("receiver", "detect");
             }
         }
     }
@@ -191,8 +179,6 @@ public class ClapService extends Service {
         Intent intent = new Intent(ClapService.this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(pendingIntent);
-        //notificationManager.notify(NOTIFICATION_ID, builder.build());
-        //start foreground
         startForeground(NOTIFICATION_ID, builder.build());
     }
 
@@ -202,7 +188,6 @@ class CustomTimerTask extends TimerTask{
     @Override
     public void run() {
         count ++;
-        Log.d("count", count+"");
         if(count > 2){
             this.cancel();
             count = 0;

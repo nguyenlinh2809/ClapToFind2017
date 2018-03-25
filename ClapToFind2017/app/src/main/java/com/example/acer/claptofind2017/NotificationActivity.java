@@ -10,13 +10,13 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class NotificationActivity extends AppCompatActivity {
 
     public static String MY_ACTION = "my_action";
-    //public static String MY_RECEIVER = "my_receiver";
 
     public static String MY_ACTION_VOLUME_UP = "my_action_volume_up";
     public static String MY_ACTION_VOLUME_DOWN = "my_action_volume_down";
@@ -30,12 +30,9 @@ public class NotificationActivity extends AppCompatActivity {
     boolean checkFlash = false;
 
     boolean checkReceiver = false;
-
-    ArrayList<Integer> listSong;
     ShareReferencesManager shareReferencesManager;
 
     Button btnYes;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +60,9 @@ public class NotificationActivity extends AppCompatActivity {
                 checkReceiver = true;
                 receiver = true;
                 checkFlash = true;
-                /*if(shareReferencesManager.getRingtoneStatus()){
-                    turnOnFlash.blinkFlash(checkFlash);
-                }*/
                 stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
                 Intent intent = new Intent();
                 intent.setAction(MY_ACTION);
-                //intent.putExtra(MY_RECEIVER, receiver);
                 sendBroadcast(intent);
                 finish();
             }
@@ -78,16 +71,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     private void addControls() {
         shareReferencesManager = new ShareReferencesManager(getApplicationContext());
-        listSong = new ArrayList<>();
-        listSong.add(R.raw.ek_villain_sad);
-        listSong.add(R.raw.miss_pooja);
-        listSong.add(R.raw.preman);
-        listSong.add(R.raw.ringtone);
-        listSong.add(R.raw.sumon);
-        listSong.add(R.raw.voice_bawa);
-        listSong.add(R.raw.in_the_end);
-        listSong.add(R.raw.numb);
-        listSong.add(R.raw.until_you);
 
 
         btnYes = (Button) findViewById(R.id.btnYes);
@@ -98,7 +81,13 @@ public class NotificationActivity extends AppCompatActivity {
 
 
         if(shareReferencesManager.getRingtoneStatus()){
-            playRingtone = new PlayRingtone(getApplicationContext(), listSong.get(shareReferencesManager.getRingtonePosition()));
+            if(shareReferencesManager.getRingtoneURI() == null){
+                Toast.makeText(this, "device does not have any ringtone", Toast.LENGTH_SHORT).show();
+                return;
+            }else {
+                playRingtone = new PlayRingtone(getApplicationContext(), shareReferencesManager.getRingtoneURI());
+            }
+
         }
         vibration = new Vibration(getApplicationContext());
         startNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getFlashStatus(), shareReferencesManager.getVibrateStatus());
@@ -137,7 +126,6 @@ public class NotificationActivity extends AppCompatActivity {
             stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
             Intent intent = new Intent();
             intent.setAction(MY_ACTION_VOLUME_DOWN);
-            //intent.putExtra(MY_RECEIVER, receiver);
             sendBroadcast(intent);
             finish();
             return true;
@@ -153,7 +141,6 @@ public class NotificationActivity extends AppCompatActivity {
             stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
             Intent intent = new Intent();
             intent.setAction(MY_ACTION_VOLUME_UP);
-            //intent.putExtra(MY_RECEIVER, receiver);
             sendBroadcast(intent);
             finish();
             return true;
@@ -167,7 +154,6 @@ public class NotificationActivity extends AppCompatActivity {
             stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
             Intent intent = new Intent();
             intent.setAction(MY_ACTION_ON_DESTROY);
-            //intent.putExtra(MY_RECEIVER, receiver);
             sendBroadcast(intent);
             finish();
         }

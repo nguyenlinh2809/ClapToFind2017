@@ -20,15 +20,21 @@ public class Vibration {
     public void vibrate(){
 
         long[] pattern = new long[] { 100, 1000, 1000 };
-        if(vibrator.hasVibrator()){
+        if(hasVibration()){
             vibrator.vibrate(pattern, 1);
         }else{
-            Toast.makeText(context, "This device is not supported vibration!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "This device does not support Vibration!", Toast.LENGTH_SHORT).show();
+            return;
         }
     }
     public void stopVibrate(){
         if(vibrator != null){
             vibrator.cancel();
         }else return;
+    }
+    public boolean hasVibration(){
+        if(vibrator.hasVibrator()){
+            return true;
+        }else return false;
     }
 }

@@ -2,6 +2,7 @@ package com.example.acer.claptofind2017;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.provider.Settings;
 
 /**
  * Created by ACER on 11/13/2017.
@@ -14,7 +15,7 @@ public class ShareReferencesManager {
     public static final String FLASH = "flash";
     public static final String VIBRATE = "vibrate";
     public static final String IS_START = "is_start";
-    public static final String RINGTONE_POSITION = "ringtone_position";
+    public static final String RINGTONE_URI = "ringtone_uri";
     public static final String SENSITY_STATUS = "sensity_status";
 
     SharedPreferences sharedPreferences;
@@ -37,9 +38,9 @@ public class ShareReferencesManager {
         editor.putString(SENSITY_STATUS, sensityStatus);
         editor.apply();
     }
-    public void saveRingtonePosition(int position){
+    public void saveRingtoneURI(String ringtoneURI){
         editor = sharedPreferences.edit();
-        editor.putInt(RINGTONE_POSITION, position);
+        editor.putString(RINGTONE_URI, ringtoneURI);
         editor.apply();
     }
     public void saveStartStatus(boolean isStart){
@@ -75,8 +76,8 @@ public class ShareReferencesManager {
     public boolean getStartStatus(){
         return sharedPreferences.getBoolean(IS_START, false);
     }
-    public int getRingtonePosition(){
-        return sharedPreferences.getInt(RINGTONE_POSITION, 0);
+    public String getRingtoneURI(){
+        return sharedPreferences.getString(RINGTONE_URI, String.valueOf(Settings.System.DEFAULT_RINGTONE_URI));
     }
     public String getSensityStatus(){
         return sharedPreferences.getString(SENSITY_STATUS, "40");

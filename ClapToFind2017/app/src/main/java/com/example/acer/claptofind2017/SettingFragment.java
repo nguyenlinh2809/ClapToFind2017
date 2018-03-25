@@ -3,12 +3,20 @@ package com.example.acer.claptofind2017;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +38,16 @@ import java.util.ArrayList;
  */
 public class SettingFragment extends Fragment {
 
+    private static final int RINGTONE_PICKER_REQUEST_CODE = 933;
     TextView tvPickRingtone, tvRingtoneResult, tvNotificationFlash;
     TextView tvPickSensity, tvResultSensity;
     CheckBox cbRingtone, cbFlash, cbVibrate;
 
-    int position = 0;
-    ArrayList<String> listSong;
     public static String permissionNameCamera = Manifest.permission.CAMERA;
 
     ShareReferencesManager shareReferencesManager;
+
+    Snackbar snackbar;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -60,16 +69,6 @@ public class SettingFragment extends Fragment {
         cbVibrate = view.findViewById(R.id.cbVibrate);
         tvNotificationFlash = view.findViewById(R.id.tvNotificationFlash);
 
-        listSong = new ArrayList<>();
-        listSong.add("ek_villain_sad");
-        listSong.add("miss_pooja");
-        listSong.add("preman");
-        listSong.add("ringtone");
-        listSong.add("sumon");
-        listSong.add("voice_bawa");
-        listSong.add("in_the_end");
-        listSong.add("numb");
-        listSong.add("ultil_you");
         getShareReferenceSettings();
         addEvents();
         return view;
@@ -80,7 +79,13 @@ public class SettingFragment extends Fragment {
         cbRingtone.setChecked(shareReferencesManager.getRingtoneStatus());
         cbFlash.setChecked(shareReferencesManager.getFlashStatus());
         cbVibrate.setChecked(shareReferencesManager.getVibrateStatus());
-        tvRingtoneResult.setText(listSong.get(shareReferencesManager.getRingtonePosition()));
+        if(shareReferencesManager.getRingtoneURI().equals(String.valueOf(Settings.System.DEFAULT_RINGTONE_URI))){
+            tvRingtoneResult.setText("Default Ringtone");
+        }else {
+            Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), Uri.parse(shareReferencesManager.getRingtoneURI()));
+            tvRingtoneResult.setText(ringtone.getTitle(getActivity()));
+        }
+
         tvResultSensity.setText(shareReferencesManager.getSensityStatus());
     }
 
@@ -88,7 +93,7 @@ public class SettingFragment extends Fragment {
     public void onPause() {
         super.onPause();
         shareReferencesManager.saveSettings(cbRingtone.isChecked(), cbFlash.isChecked(), cbVibrate.isChecked(), tvResultSensity.getText().toString());
-        Log.d("position", position+"");
+
     }
 
     private void addEvents() {
@@ -111,7 +116,8 @@ public class SettingFragment extends Fragment {
 
                 boolean hasFlash = getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
                 if(!hasFlash){
-                    Toast.makeText(getActivity(), "This device is not support Flash!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "This device does not support Flash!", Toast.LENGTH_LONG).show();
+                    cbFlash.setChecked(false);
                     cbFlash.setEnabled(false);
                     shareReferencesManager.saveFlash(false);
                 }else {
@@ -137,7 +143,16 @@ public class SettingFragment extends Fragment {
         cbVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                shareReferencesManager.saveVibrate(b);
+                Vibration vibration = new Vibration(getActivity());
+                if(!vibration.hasVibration()){
+                    Toast.makeText(getActivity(), "This device does not support Vibration!", Toast.LENGTH_SHORT).show();
+                    cbVibrate.setChecked(false);
+                    cbVibrate.setEnabled(false);
+                    shareReferencesManager.saveVibrate(false);
+                }else{
+                    shareReferencesManager.saveVibrate(b);
+                }
+
             }
         });
     }
@@ -193,35 +208,31 @@ public class SettingFragment extends Fragment {
     }
 
     private void showRingtoneDialog() {
-        final Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.dialog_select_ringtone_layout);
-        final ListView lvRingtone = dialog.findViewById(R.id.lvRingtone);
-        Button btnOk = dialog.findViewById(R.id.btn_dialog_ok);
-        Button btnCancel = dialog.findViewById(R.id.btn_dialog_cancel);
+        Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Please select your ringtone");
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_RINGTONE);
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(shareReferencesManager.getRingtoneURI()));
+        startActivityForResult(intent, RINGTONE_PICKER_REQUEST_CODE);
 
-        final ArrayAdapter<String> adapterSong = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_single_choice, listSong);
-        lvRingtone.setAdapter(adapterSong);
-        position = listSong.indexOf(tvRingtoneResult.getText().toString());
-        lvRingtone.setItemChecked(position, true);
-        lvRingtone.setSelection(position);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RINGTONE_PICKER_REQUEST_CODE && resultCode == getActivity().RESULT_OK && data != null){
+            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+            shareReferencesManager.saveRingtoneURI(String.valueOf(uri));
+            Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), uri);
+            String title = ringtone.getTitle(getActivity());
+            if (title.contains("Default ringtone")){
+                tvRingtoneResult.setText("Default ringtone");
+            }else {
+                tvRingtoneResult.setText(title);
             }
-        });
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                position = lvRingtone.getCheckedItemPosition();
-                shareReferencesManager.saveRingtonePosition(position);
-                tvRingtoneResult.setText(listSong.get(position));
-                dialog.dismiss();
-            }
-        });
 
-        dialog.show();
-
+        }
     }
 
     public boolean checkPermission(String permissionName){
@@ -246,11 +257,39 @@ public class SettingFragment extends Fragment {
                 tvNotificationFlash.setBackgroundColor(getResources().getColor(android.R.color.background_light));
             }else{
                 cbFlash.setChecked(false);
-                Toast.makeText(getActivity(), "Please grant Camera permission to use Flash function", Toast.LENGTH_LONG).show();
-                tvNotificationFlash.setText("Please grant Camera permission to use Flash function");
-                tvNotificationFlash.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), permissionNameCamera)){
+                    Toast.makeText(getActivity(), "Please grant Camera permission to use Flash function", Toast.LENGTH_LONG).show();
+                    tvNotificationFlash.setText("Please grant Camera permission to use Flash function");
+                    tvNotificationFlash.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
+                }else{
+                    tvNotificationFlash.setText("");
+                    tvNotificationFlash.setBackgroundColor(getResources().getColor(android.R.color.white));
+                    Toast.makeText(getActivity(), "Permission denied, please enanle to use this function!", Toast.LENGTH_SHORT).show();
+                    snackbar = Snackbar.make(getView(), getResources().getString(R.string.Snacbar), Snackbar.LENGTH_INDEFINITE);
+                    snackbar.setAction(getResources().getString(R.string.Snacbar_message), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (getActivity() == null){
+                                return;
+                            }
+                            Intent intent = new Intent();
+                            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                            intent.setData(uri);
+                            getActivity().startActivity(intent);
+                        }
+                    });
+                    snackbar.show();
+                }
             }
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(snackbar != null){
+            snackbar.dismiss();
+        }
+    }
 }
