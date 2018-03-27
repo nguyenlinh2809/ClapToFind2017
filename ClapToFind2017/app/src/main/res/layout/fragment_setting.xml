@@ -198,14 +198,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:maxLines="3"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
         android:id="@+id/tvResultRingtone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="@dimen/tv_margin_top"
-        android:text="miss_pooja"
+        android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/text_size"
         android:textStyle="bold"

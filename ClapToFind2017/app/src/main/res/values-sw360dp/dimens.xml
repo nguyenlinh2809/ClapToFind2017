@@ -3,8 +3,8 @@
     <dimen name="header_height">200dp</dimen>
     <dimen name="text_size">20sp</dimen>
     <dimen name="textview_width">220dp</dimen>
-    <dimen name="image_button_width">160dp</dimen>
-    <dimen name="image_button_height">190dp</dimen>
+    <dimen name="image_button_width">200dp</dimen>
+    <dimen name="image_button_height">300dp</dimen>
     <dimen name="image_button_marginTop">60dp</dimen>
     <dimen name="listview_height">500dp</dimen>
     <dimen name="padding_dialog">10dp</dimen>

@@ -226,7 +226,7 @@ public class SettingFragment extends Fragment {
             shareReferencesManager.saveRingtoneURI(String.valueOf(uri));
             Ringtone ringtone = RingtoneManager.getRingtone(getActivity(), uri);
             String title = ringtone.getTitle(getActivity());
-            if (title.contains("Default ringtone")){
+            if (uri.toString().equals(String.valueOf(Settings.System.DEFAULT_RINGTONE_URI))){
                 tvRingtoneResult.setText("Default ringtone");
             }else {
                 tvRingtoneResult.setText(title);

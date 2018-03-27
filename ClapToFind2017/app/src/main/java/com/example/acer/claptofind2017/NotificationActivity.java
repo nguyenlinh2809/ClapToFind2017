@@ -65,6 +65,7 @@ public class NotificationActivity extends AppCompatActivity {
                 intent.setAction(MY_ACTION);
                 sendBroadcast(intent);
                 finish();
+                startActivity(new Intent(NotificationActivity.this, MainActivity.class));
             }
         });
     }
@@ -123,11 +124,7 @@ public class NotificationActivity extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         checkReceiver = true;
         if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
-            stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
-            Intent intent = new Intent();
-            intent.setAction(MY_ACTION_VOLUME_DOWN);
-            sendBroadcast(intent);
-            finish();
+            turnOffNotificationActivity();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -138,11 +135,7 @@ public class NotificationActivity extends AppCompatActivity {
     public boolean onKeyUp(int keyCode, KeyEvent event) {
         checkReceiver = true;
         if(keyCode == KeyEvent.KEYCODE_VOLUME_UP){
-            stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
-            Intent intent = new Intent();
-            intent.setAction(MY_ACTION_VOLUME_UP);
-            sendBroadcast(intent);
-            finish();
+            turnOffNotificationActivity();
             return true;
         }
         return super.onKeyUp(keyCode, event);
@@ -151,12 +144,29 @@ public class NotificationActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if(!checkReceiver){
-            stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
-            Intent intent = new Intent();
-            intent.setAction(MY_ACTION_ON_DESTROY);
-            sendBroadcast(intent);
-            finish();
+            turnOffNotificationActivity();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        turnOffNotificationActivity();
+        checkReceiver = true;
+    }
+
+    @Override
+    protected void onUserLeaveHint() {
+        super.onUserLeaveHint();
+        turnOffNotificationActivity();
+        checkReceiver = true;
+    }
+    public void turnOffNotificationActivity(){
+        stopNotification(shareReferencesManager.getRingtoneStatus(), shareReferencesManager.getVibrateStatus(), shareReferencesManager.getFlashStatus());
+        Intent intent = new Intent();
+        intent.setAction(MY_ACTION_ON_DESTROY);
+        sendBroadcast(intent);
+        finish();
     }
 }

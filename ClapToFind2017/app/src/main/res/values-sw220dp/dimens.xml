@@ -3,14 +3,14 @@
     <dimen name="header_height">122dp</dimen>
     <dimen name="text_size">12sp</dimen>
     <dimen name="textview_width">134dp</dimen>
-    <dimen name="image_button_width">97dp</dimen>
-    <dimen name="image_button_height">116dp</dimen>
+    <dimen name="image_button_width">122dp</dimen>
+    <dimen name="image_button_height">183dp</dimen>
     <dimen name="image_button_marginTop">36dp</dimen>
     <dimen name="listview_height">305dp</dimen>
     <dimen name="padding_dialog">6dp</dimen>
     <dimen name="height_sensity_dialog">61dp</dimen>
     <dimen name="width_sensity_dialog">183dp</dimen>
-    <dimen name="textview_padding">1dp</dimen>
+    <dimen name="textview_padding">3dp</dimen>
     <dimen name="margin_layout">24dp</dimen>
-    <dimen name="tv_margin_top">15dp</dimen>
+    <dimen name="tv_margin_top">9dp</dimen>
 </resources>

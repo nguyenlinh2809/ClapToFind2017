@@ -3,8 +3,8 @@
     <dimen name="header_height">227dp</dimen>
     <dimen name="text_size">22sp</dimen>
     <dimen name="textview_width">250dp</dimen>
-    <dimen name="image_button_width">182dp</dimen>
-    <dimen name="image_button_height">216dp</dimen>
+    <dimen name="image_button_width">227dp</dimen>
+    <dimen name="image_button_height">341dp</dimen>
     <dimen name="image_button_marginTop">68dp</dimen>
     <dimen name="listview_height">569dp</dimen>
     <dimen name="padding_dialog">11dp</dimen>
@@ -12,5 +12,5 @@
     <dimen name="width_sensity_dialog">341dp</dimen>
     <dimen name="textview_padding">5dp</dimen>
     <dimen name="margin_layout">45dp</dimen>
-    <dimen name="tv_margin_top">15dp</dimen>
+    <dimen name="tv_margin_top">17dp</dimen>
 </resources>

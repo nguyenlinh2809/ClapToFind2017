@@ -146,6 +146,8 @@ public class ClapService extends Service {
                 mThread.interrupt();
             }
             audio.stop();
+            audio = null;
+
         } else {
             Toast.makeText(this, "Already stop", Toast.LENGTH_SHORT).show();
             return;
